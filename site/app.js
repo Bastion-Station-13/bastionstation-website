@@ -98,15 +98,15 @@ const CONFIG = {
     el('pop-total').textContent = error ? 'Player count unavailable' : `${data.players} players online`;
     //el('version').textContent = error ? String(data?.errortext || 'Connection Error!')
     //  : `Playing ${Object.hasOwn(data, 'custom_event') ? `Event ${data.custom_event}` : `${data.version}${Object.hasOwn(data, 'mode') ? ` mode "${data.mode}"` : ''}`}`;
-    el('version').textContent = error ? String(data?.errortext || 'Connection Error!') : 'Server is online!';
-    el('map').textContent = error ? 'Unknown' : String(data.map_name ?? 'Unknown');
-    el('round_time').textContent = error ? 'Unknown' : `${secondsToTime(data.round_duration)}`;
-    el('shuttle').textContent = error ? 'Unknown' : shuttleText(data);
-    const level = error ? 'unknown' : String(data.security_level || 'unknown').toLowerCase();
-    el('alert').textContent = level.charAt(0).toUpperCase() + level.slice(1);
+    el('version').textContent = error ? String(data?.errortext || 'Connection error!') : 'Server is online!';
+    el('map').textContent = error ? 'RuntimeStation' : String(data.map_name ?? 'Unknown');
+    el('round_time').textContent = error ? 'Until the next host' : `${secondsToTime(data.round_duration)}`;
+    el('shuttle').textContent = error ? 'Nobody is coming to save you' : shuttleText(data);
+    const level = String(data.security_level || 'unknown').toLowerCase();
+    el('alert').textContent = error ? 'ATTENTION: Security level elevated to \'offline\'' : level.charAt(0).toUpperCase() + level.slice(1);
     el('alert').className = ['green', 'blue', 'red', 'delta'].includes(level) ? `alert-${level}` : '';
-    el('admins').textContent = error ? 'Unknown' : String(data.admins ?? 'Unknown');
-    el('pop').textContent = error ? 'Unknown' : `${data.players}/${populationCap(data)}`;
+    el('admins').textContent = error ? 'AHELP: Clown grief pls ban he' : String(data.admins ?? 'Unknown');
+    el('pop').textContent = error ? 'Just us chickens' : `${data.players}/${populationCap(data)}`;
     //setPopulation(error ? null : data);
     el('badges').replaceChildren();
     if (!error) {
@@ -120,7 +120,7 @@ const CONFIG = {
     }
     el('badges').hidden = !el('badges').childElementCount;
     const revision = el('revision');
-    revision.textContent = 'Unknown';
+    revision.textContent = '@Maintainer please merge my PR';
     if (!error && data.revision) {
       const hash = String(data.revision);
       // Plain text: the server reports its TGS merge commit, which is not pushed to GitHub.
