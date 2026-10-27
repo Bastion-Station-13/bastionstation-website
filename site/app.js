@@ -55,12 +55,12 @@ const CONFIG = {
   }
 
   function shuttleText(data) {
-    if (!data.shuttle_mode || !Number(data.shuttle_timer)) return '';
+    if (!data.shuttle_mode || !Number(data.shuttle_timer)) return 'Idle';
     const prefixes = { igniting: 'IGN', recalled: 'RCL', called: 'ETA', docked: 'ETD', escape: 'ESC' };
     if (data.shuttle_mode === 'stranded') return 'ERR --:--';
     if (data.shuttle_mode === 'endgame: game over') return 'FIN 00:00';
     const prefix = prefixes[data.shuttle_mode];
-    return prefix ? `${prefix} ${secondsToTime(data.shuttle_timer)}` : '';
+    return prefix ? `${prefix} ${secondsToTime(data.shuttle_timer)}` : 'Idle';
   }
 
   function setAddress(value) {
@@ -70,6 +70,7 @@ const CONFIG = {
     el('address').textContent = address;
   }
 
+  /*
   function setPopulation(data) {
     const count = data ? `${data.players}/${populationCap(data)}` : 'Unknown';
     const cap = data && Number(data.hard_popcap || data.popcap || data.extreme_popcap);
@@ -86,7 +87,8 @@ const CONFIG = {
       bar.setAttribute('aria-valuenow', String(Math.max(0, Math.min(cap, players))));
     }
   }
-
+  */
+  
   function render(data) {
     const error = !data || Object.hasOwn(data, 'ERROR') || data.players == null || data.version == null;
     const state = error ? 'offline' : [2, 3].includes(Number(data.gamestate))
@@ -94,18 +96,18 @@ const CONFIG = {
     el('server').dataset.state = state;
     el('state').textContent = { offline: 'Offline', underway: 'Round underway', ending: 'Round ending', lobby: 'In lobby' }[state];
     el('pop-total').textContent = error ? 'Player count unavailable' : `${data.players} players online`;
-    el('version').textContent = error ? String(data?.errortext || 'Connection Error!')
-      : `Playing ${Object.hasOwn(data, 'custom_event') ? `Event ${data.custom_event}` : `${data.version}${Object.hasOwn(data, 'mode') ? ` mode "${data.mode}"` : ''}`}`;
+    //el('version').textContent = error ? String(data?.errortext || 'Connection Error!')
+    //  : `Playing ${Object.hasOwn(data, 'custom_event') ? `Event ${data.custom_event}` : `${data.version}${Object.hasOwn(data, 'mode') ? ` mode "${data.mode}"` : ''}`}`;
+    el('version').textContent = error ? String(data?.errortext || 'Connection Error!') : 'Server is online!';
     el('map').textContent = error ? 'Unknown' : String(data.map_name ?? 'Unknown');
-    el('round').textContent = error ? 'Unknown' : `#${data.round_id ?? '?'} · ${secondsToTime(data.round_duration)}`;
-    const shuttle = error ? '' : shuttleText(data);
-    el('shuttle').textContent = shuttle;
-    el('shuttle').hidden = el('shuttle-label').hidden = !shuttle;
+    el('round_time').textContent = error ? 'Unknown' : `${secondsToTime(data.round_duration)}`;
+    el('shuttle').textContent = error ? 'Unknown' : shuttleText(data);
     const level = error ? 'unknown' : String(data.security_level || 'unknown').toLowerCase();
     el('alert').textContent = level.charAt(0).toUpperCase() + level.slice(1);
     el('alert').className = ['green', 'blue', 'red', 'delta'].includes(level) ? `alert-${level}` : '';
     el('admins').textContent = error ? 'Unknown' : String(data.admins ?? 'Unknown');
-    setPopulation(error ? null : data);
+    el('pop').textContent = error ? 'Unknown' : `${data.players}/${populationCap(data)}`;
+    //setPopulation(error ? null : data);
     el('badges').replaceChildren();
     if (!error) {
       for (const [show, text] of [[data.bunkered === true, 'Bunker on'], [data.hub === true, 'On BYOND hub']]) {
