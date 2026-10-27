@@ -22,6 +22,29 @@ const CONFIG = {
     return `${total >= 86400 ? `${days}:` : ''}${total >= 3600 ? `${String(hours).padStart(2, '0')}:` : ''}${minutes}:${remainder}`;
   }
 
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
   function populationCap(data) {
     const extreme = Number(data.extreme_popcap);
     const hard = Number(data.hard_popcap);
@@ -137,9 +160,20 @@ const CONFIG = {
       selection.addRange(range);
     }
   });
-  document.querySelector('#notice .x').addEventListener('click', () => el('notice').remove());
+  if(getCookie('pop-up') !== 'set') { 
+    el('notice').removeAttribute('hidden');
+    document.querySelector('#notice .x').addEventListener('click', () => {
+      el('notice').remove();
+      setCookie('pop-up', 'set', 365)
+    });
+  }
   el('demo-note').hidden = !demo;
   setAddress(CONFIG.address);
+
+  document.querySelectorAll('time').forEach($e => {
+  const date = new Date($e.dateTime);
+  $e.innerHTML = date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+});
 
   // Header sprite: the Bastion wall first, then shuffled items. Click advances; auto-advance skips reduced motion.
   const sprites = [
