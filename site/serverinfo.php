@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-$byondHost = getenv('BYOND_HOST') ?: 'www.bastionstation.com';
+$byondHost = getenv('BYOND_HOST') ?: 'play.bastionstation.com';
 $byondPort = (int) (getenv('BYOND_PORT') ?: 1336);
 $publicAddress = getenv('PUBLIC_ADDRESS') ?: "$byondHost:$byondPort";
 $identifier = 'bastion';

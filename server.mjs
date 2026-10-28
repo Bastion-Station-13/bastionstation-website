@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const PORT = Number(process.env.PORT || 8790);
 // Loopback by default: run this behind a reverse proxy that terminates TLS. Use 0.0.0.0 in a container.
 const HOST = process.env.HOST || '127.0.0.1';
-const BYOND_HOST = process.env.BYOND_HOST || 'www.bastionstation.com';
+const BYOND_HOST = process.env.BYOND_HOST || 'play.bastionstation.com';
 const BYOND_PORT = Number(process.env.BYOND_PORT || 1336);
 const PUBLIC_ADDRESS = process.env.PUBLIC_ADDRESS || `${BYOND_HOST}:${BYOND_PORT}`;
 const IDENTIFIER = 'bastion';

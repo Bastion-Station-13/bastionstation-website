@@ -29,7 +29,7 @@ Everything is an environment variable.
 | --- | --- | --- |
 | `PORT` | `8790` | Node only. HTTP port to listen on. |
 | `HOST` | `127.0.0.1` | Node only. Bind address. Loopback by default so only the reverse proxy can reach it. Use `0.0.0.0` in a container. |
-| `BYOND_HOST` | `www.bastionstation.com` | Game server host to query. |
+| `BYOND_HOST` | `play.bastionstation.com` | Game server host to query. |
 | `BYOND_PORT` | `1336` | Game server port. |
 | `PUBLIC_ADDRESS` | `BYOND_HOST:BYOND_PORT` | Address shown on the page and used in the connect link. |
 
@@ -59,7 +59,7 @@ The Node server listens on loopback and speaks plain HTTP. Run it under a proces
 2. **Put the code in place.**
 
    ```sh
-   sudo git clone https://github.com/Stoopler/bastionstation /opt/bastionstation
+   sudo git clone https://github.com/Bastion-Station-13/bastionstation-website /opt/bastionstation
    ```
 
 3. **Install the service.**

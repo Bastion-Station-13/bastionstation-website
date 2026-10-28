@@ -22,7 +22,7 @@
         "bunkered": false,
         "shuttle_mode": "called",
         "shuttle_timer": 180,
-        "public_address": "www.bastionstation.com:1336"
+        "public_address": "play.bastionstation.com:1336"
       }
     }
   ],

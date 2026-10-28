@@ -1,7 +1,7 @@
 const CONFIG = {
   serverinfoUrl: 'serverinfo.json',
   identifier: 'bastion',
-  address: 'www.bastionstation.com:1336',
+  address: 'play.bastionstation.com:1336',
   pollMs: 10000,
 };
 
