@@ -70,9 +70,9 @@ const CONFIG = {
     el('address').textContent = address;
   }
 
-  /*
+
   function setPopulation(data) {
-    const count = data ? `${data.players}/${populationCap(data)}` : 'Unknown';
+    const count = data ? `${data.players}/${populationCap(data)}` : 'Just us chickens';
     const cap = data && Number(data.hard_popcap || data.popcap || data.extreme_popcap);
     const players = data && Number(data.players);
     const bar = el('population');
@@ -87,7 +87,7 @@ const CONFIG = {
       bar.setAttribute('aria-valuenow', String(Math.max(0, Math.min(cap, players))));
     }
   }
-  */
+
   
   function render(data) {
     const error = !data || Object.hasOwn(data, 'ERROR') || data.players == null || data.version == null;
@@ -106,8 +106,8 @@ const CONFIG = {
     el('alert').textContent = error ? 'ATTENTION: Security level elevated to \'offline\'' : level.charAt(0).toUpperCase() + level.slice(1);
     el('alert').className = ['green', 'blue', 'red', 'delta'].includes(level) ? `alert-${level}` : '';
     el('admins').textContent = error ? 'AHELP: Clown grief pls ban he' : String(data.admins ?? 'Unknown');
-    el('pop').textContent = error ? 'Just us chickens' : `${data.players}/${populationCap(data)}`;
-    //setPopulation(error ? null : data);
+    //el('pop').textContent = error ? 'Just us chickens' : `${data.players}/${populationCap(data)}`;
+    setPopulation(error ? null : data);
     el('badges').replaceChildren();
     if (!error) {
       for (const [show, text] of [[data.bunkered === true, 'Bunker on'], [data.hub === true, 'On BYOND hub']]) {
